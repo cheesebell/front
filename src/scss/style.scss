@@ -1,0 +1,14 @@
+@import 'common/reset';
+@import 'common/head';
+@import 'common/foot';
+@import 'common/layout';
+
+// main
+@import 'main/content';
+@import 'main/visual';
+
+// sub
+@import 'sub/gallery';
+@import 'sub/youtube';
+@import 'sub/department';
+

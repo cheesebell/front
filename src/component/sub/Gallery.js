@@ -1,0 +1,83 @@
+import React , { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+
+function Gallery() {
+
+  const frame = useRef(null);
+  const [items, setItems] = useState([]);
+  const [isPop, setIspop] = useState(false);
+  const [index, setIndex] = useState(0);
+  const key = '2ded31f6bd2818a5bdf20954d95106f2';
+  const method = 'flickr.interestingness.getList';
+  const per_page = 10;
+  const url = `https://www.flickr.com/services/rest/?method=${method}&api_key=${key}&format=json&nojsoncallback=1&per_page=${per_page}`;
+
+  useEffect(()=> {
+    frame.current.classList.add('on');
+
+    axios
+    .get(url)
+    .then((json)=> {
+      console.log(json.data.photos.photo);
+      setItems(json.data.photos.photo);
+    })
+    .catch((err)=> {
+        console.log(err)
+    })
+  },[]);
+
+  useEffect(()=> {
+    console.log(index)
+  },[index])
+
+  return (
+    <>
+      <section className='gallery' ref={frame}>
+        <div className='inner'>
+          <h1>Gallery</h1>
+
+          <ul>
+            {items.map((item, idx)=> {
+              return (
+                <li key={idx} 
+                    onClick={()=> {
+                      setIspop(!isPop)
+                      setIndex(idx)
+                    }
+                }>
+                  <h2>{item.title}</h2>
+                  <img src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`} />
+                </li>
+              )
+            })}
+            <li></li>
+          </ul>
+        </div>
+      </section>
+
+      { isPop ? <Popup/> : null }
+    </>
+  );
+
+  function Popup() {
+    useEffect(()=> {
+      document.body.style.overflow = 'hidden';
+      return () => (document.body.style.overflow = 'auto')
+    })
+
+    return (
+      <aside className='popup'>
+        <span onClick={()=> {
+          setIspop(!isPop)
+        }}>close</span>
+        
+        <div className='pic'>
+          <img src={`https://live.staticflickr.com/${items[index].server}/${items[index].id}_${items[index].secret}_b.jpg`} />
+          <p>{items[index].title}</p>
+        </div>
+      </aside>
+    )
+  }
+}
+
+export default Gallery

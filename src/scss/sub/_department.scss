@@ -1,0 +1,37 @@
+.department {
+  padding: 50px;
+
+  ul {
+    height: 100%;
+
+    &::after {
+      display: block;
+      content: "";
+      clear:both;
+    }
+
+    li {
+      float: left;
+      width: 272px;
+      height: 400px;
+      padding: 15px;
+      border: 1px solid #dcdcdc;
+      margin: 0 30px 30px 0;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+}
