@@ -22,7 +22,7 @@ function App() {
         </Route>
       </Switch>
       <Route path='/department' component={Department}/>
-      <Route path='/youtebe' component={Youtube}/>
+      <Route path='/youtube' component={Youtube}/>
       <Route path='/gallery' component={Gallery}/>
       <Foot/>
     </>
