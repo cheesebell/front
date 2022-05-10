@@ -1,54 +1,35 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 function Location() {
+    const { kakao } = window;
+    const path = process.env.PUBLIC_URL;
+    // 정보값 배열
+    const info = [
+        {
+            title: '1짱집',
+            latlag: new kakao.maps.LatLng(37.415269, 126.689892),
+            imgSrc: path + '/img/marker1.png',
+            imgSize: new kakao.maps.Size(232, 99),
+            imgPos: { offset: new kakao.maps.Point(100, 70)},
+        },
+        {
+            title: '2짱집',
+            latlag: new kakao.maps.LatLng(37.492053, 126.499555),
+            imgSrc: path + '/img/marker2.png',
+            imgSize: new kakao.maps.Size(232, 99),
+            imgPos: { offset: new kakao.maps.Point(100, 80)},
+        },
+    ];
+
+    // useRef 가상 DOM
     const frame = useRef(null);
     const container = useRef(null);
-    const { kakao } = window;
-    // map useRef 선언
+
+    // 렌더링 주요 state
     const [ map, setMap ] = useState(null);
-    // traffic btn toggle 선언
-    const [ traffic, setTraffic ] = useState(false);
-    // 마커 이미지 추가
-    const path = process.env.PUBLIC_URL;
-    
-    useEffect(()=> {
-        frame.current.classList.add('on');
-
-        //지도 출력을 위한 옵션값 지정
-        const options = { 
-            center: new kakao.maps.LatLng(37.4146828, 126.6878551), //지도의 중심좌표.
-            level: 3 //지도의 레벨(확대, 축소 정도)
-        };
-
-        //kakao api로 부터 인스턴스 복사 (지도가 출력될 프레임, 옵션)
-        const mapInfo = new kakao.maps.Map(container.current, options);
-        setMap(mapInfo);
-
-        // 마커 포지션
-        const markerPosition = new kakao.maps.LatLng(
-            37.4146828,
-            126.6878551
-        );
-
-        // 마커이미지 정보 추가
-        const imgSrc = `${path}/img/marker1.png`;
-        const imgSize = new kakao.maps.Size(232, 99);
-        const imgOption = { offset: new kakao.maps.Point(-80, 150)};
-
-        const markerImg = new kakao.maps.MarkerImage (
-            imgSrc,
-            imgSize,
-            imgOption
-        );
-
-        // 마커 생성
-        const marker = new kakao.maps.Marker({
-            position: markerPosition,
-            image: markerImg
-
-        });
-        marker.setMap(mapInfo);
-    },[]);
+    const [ traffic, setTraffic ] = useState(false); // traffic btn toggle 선언
+    const [ index, setIndex ] = useState(0);
+    const [ mapInfo ] = useState(info); // 배열 state에 담기
 
     const handleTraffic = () => {
         // map에 traffic(true)면 (?) traffic 보여주고, (:) (false)면 remove
@@ -59,18 +40,50 @@ function Location() {
         }
     };
 
-    const setCenter = (lat, lng) => {
-        const moveLatLon = new kakao.maps.LatLng(lat, lng);
-        map.setCenter(moveLatLon);
-    }
+    // index를 의존성으로 등록해서
+    // 추후 버튼 클릭시 index가 변경되면 변경된 index정보로 재출력
+    useEffect(()=> {
+        frame.current.classList.add('on');
+    },[]);
 
+    useEffect(()=> {
+          //지도 출력을 위한 옵션값 지정
+        const options = { 
+            center: mapInfo[index].latlag,  // info 에 index번쨰 latlag 위치값
+            level: 3 //지도의 레벨(확대, 축소 정도)
+        };
+        
+        const mapInstance = new kakao.maps.Map(container.current, options);
 
-    // 보여지는게 아니니 useEffect 선언
+        new kakao.maps.Marker({
+            map: mapInstance,
+            position: mapInfo[index].latlag,
+            title: mapInfo[index].title,
+            image: new kakao.maps.MarkerImage(
+                mapInfo[index].imgSrc,
+                mapInfo[index].imgSize,
+                mapInfo[index].imgPos
+            )
+        });
+
+        // 지도 가운데 이동 
+        const mapInit = () => {
+            mapInstance.setCenter(mapInfo[index].latlag)
+        };
+        // 리사이징 중앙값 갱신
+        window.addEventListener('resize', mapInit)
+
+        // 마커값을 map에 넣어줌
+        setMap(mapInstance);
+    },[index]);
+
+    
+    //traffic state가 변경될때마사 실행 트래픽 오버레이 레이어 표시
     useEffect(()=> {
         handleTraffic();
     },[traffic])
 
-
+    //state값 변경에 따라 렌더링될 가상DOM
     return (
         <section className='location' ref={frame}>
             <div className='inner'>
@@ -78,12 +91,18 @@ function Location() {
                 <div id='map' ref={container}></div>
 
                 <div>Traffic</div>
-                {/* <button onClick={() => setTraffic(!traffic)}>
+                <button onClick={()=> setTraffic(!traffic)}>
                     {traffic ? 'OFF' : 'ON'}
-                </button> */}
+                </button>
+
                 <ul className='branch'>
-                    <li onClick={()=> setCenter(37.4146828, 126.6878551)}>1짱집</li>
-                    <li onClick={()=> setCenter(37.487626, 126.753045)}>어땨</li>
+                    {mapInfo.map((data, idx) => {
+                        return (
+                            <li key={idx} onClick={()=> setIndex(idx)}>
+                                {data.title}
+                            </li>
+                        )
+                    })}
                 </ul>
             </div>
         </section>
