@@ -70,6 +70,16 @@ function Location() {
             )
         });
 
+        // 지도 컨트롤 인스턴스 생성
+        const mapTypeControl = new kakao.maps.MapTypeControl();
+        mapInstance.addControl (
+            mapTypeControl,
+            kakao.maps.ControlPosition.BOTTOMRIGHT
+        );
+
+        const zoomControl = new kakao.maps.ZoomControl();
+        mapInstance.addControl(zoomControl, kakao.maps.ControlPosition.LEFT);
+
         // 지도 가운데 이동 
         const mapInit = () => {
             mapInstance.setCenter(mapInfo[index].latlag)
