@@ -1,4 +1,5 @@
 {
+  "homepage": "https://cheesebell.github.io/front",
   "name": "front_bell",
   "version": "0.1.0",
   "private": true,
@@ -45,7 +46,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3",
-    "homepage": "https://cheesebell.github.io/front"
+    "gh-pages": "^3.2.3"
   }
 }
