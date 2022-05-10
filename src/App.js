@@ -6,6 +6,8 @@ import Content from './component/main/Content';
 import Youtube from './component/sub/Youtube';
 import Gallery from './component/sub/Gallery';
 import Department from './component/sub/Department';
+import Location from './component/sub/Location';
+
 import './scss/style.scss';
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
       <Route path='/department' component={Department}/>
       <Route path='/youtube' component={Youtube}/>
       <Route path='/gallery' component={Gallery}/>
+      <Route path='/location' component={Location}/>
       <Foot/>
     </>
   )
