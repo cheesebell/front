@@ -47,7 +47,11 @@ function Location() {
     },[]);
 
     useEffect(()=> {
-          //지도 출력을 위한 옵션값 지정
+        //index state가 변경될때마다 #map안쪽에 계속해서 지도 인스턴스를 
+        //생성하면서 태그가 중첩되는 문제가 생기므로 기존 #map안쪽의 DOM을 제거해서 초기화하고 다시 지도 생성
+        container.current.innerHTML = '';
+
+        //지도 출력을 위한 옵션값 지정
         const options = { 
             center: mapInfo[index].latlag,  // info 에 index번쨰 latlag 위치값
             level: 3 //지도의 레벨(확대, 축소 정도)
@@ -75,6 +79,10 @@ function Location() {
 
         // 마커값을 map에 넣어줌
         setMap(mapInstance);
+
+        //해당 컴포넌트가 사라질때 window객체에 등록했던 mapInit핸들러 함수를 다시 제거해서
+		//불필요한 메모리 누수 방지
+        return () => window.removeEventListener('resize', mapInit)
     },[index]);
 
     
