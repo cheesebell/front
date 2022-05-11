@@ -1,9 +1,9 @@
-import React , { useEffect, useRef, useState} from 'react';
+import React , { useEffect, useState} from 'react';
 import axios from 'axios';
+import Layout from '../common/Layout';
 
 
 function Youtube() {
-  const frame = useRef(null);
   const [items, setItems] = useState([]);
   const [isPop, setIsPop] = useState(false);
   const [index, setIndex] = useState(0);
@@ -14,7 +14,6 @@ function Youtube() {
 
  
   useEffect(()=> {
-    frame.current.classList.add('on');
     axios
     .get(url)
     .then((json) => {
@@ -26,9 +25,7 @@ function Youtube() {
   return (
     // 두개 이상일때 프래그먼트
     <>
-    <section className='youtube' ref={frame}>
-      <div className='inner'>
-        <h1>Youtube</h1>
+    <Layout name='Youtube'>
         {items.map((item, idx) => {
           let desc = item.snippet.description;
           let desc_len = desc.length;
@@ -55,8 +52,7 @@ function Youtube() {
             </article>
           )
         })}
-      </div>
-    </section>
+    </Layout>
 
     {isPop ? <Popup/> : null}
     </>

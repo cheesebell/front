@@ -1,9 +1,9 @@
-import React , { useEffect, useState, useRef } from 'react';
+import React , { useEffect, useState } from 'react';
 import axios from 'axios';
+import Layout from '../common/Layout';
 
 function Gallery() {
 
-  const frame = useRef(null);
   const [items, setItems] = useState([]);
   const [isPop, setIspop] = useState(false);
   const [index, setIndex] = useState(0);
@@ -13,7 +13,6 @@ function Gallery() {
   const url = `https://www.flickr.com/services/rest/?method=${method}&api_key=${key}&format=json&nojsoncallback=1&per_page=${per_page}`;
 
   useEffect(()=> {
-    frame.current.classList.add('on');
 
     axios
     .get(url)
@@ -32,10 +31,7 @@ function Gallery() {
 
   return (
     <>
-      <section className='gallery' ref={frame}>
-        <div className='inner'>
-          <h1>Gallery</h1>
-
+      <Layout name='Gallery'>
           <ul>
             {items.map((item, idx)=> {
               return (
@@ -52,8 +48,7 @@ function Gallery() {
             })}
             <li></li>
           </ul>
-        </div>
-      </section>
+      </Layout>
 
       { isPop ? <Popup/> : null }
     </>

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import Layout from '../common/Layout';
 
 function Location() {
     const { kakao } = window;
@@ -22,7 +23,6 @@ function Location() {
     ];
 
     // useRef 가상 DOM
-    const frame = useRef(null);
     const container = useRef(null);
 
     // 렌더링 주요 state
@@ -39,12 +39,6 @@ function Location() {
             
         }
     };
-
-    // index를 의존성으로 등록해서
-    // 추후 버튼 클릭시 index가 변경되면 변경된 index정보로 재출력
-    useEffect(()=> {
-        frame.current.classList.add('on');
-    },[]);
 
     useEffect(()=> {
         //index state가 변경될때마다 #map안쪽에 계속해서 지도 인스턴스를 
@@ -103,27 +97,24 @@ function Location() {
 
     //state값 변경에 따라 렌더링될 가상DOM
     return (
-        <section className='location' ref={frame}>
-            <div className='inner'>
-                <h1>Location</h1>
-                <div id='map' ref={container}></div>
+        <Layout name='Location'>
+            <div id='map' ref={container}></div>
 
-                <div>Traffic</div>
-                <button onClick={()=> setTraffic(!traffic)}>
-                    {traffic ? 'OFF' : 'ON'}
-                </button>
+            <div>Traffic</div>
+            <button onClick={()=> setTraffic(!traffic)}>
+                {traffic ? 'OFF' : 'ON'}
+            </button>
 
-                <ul className='branch'>
-                    {mapInfo.map((data, idx) => {
-                        return (
-                            <li key={idx} onClick={()=> setIndex(idx)}>
-                                {data.title}
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
-        </section>
+            <ul className='branch'>
+                {mapInfo.map((data, idx) => {
+                    return (
+                        <li key={idx} onClick={()=> setIndex(idx)}>
+                            {data.title}
+                        </li>
+                    )
+                })}
+            </ul>
+        </Layout>
     )
 }
 

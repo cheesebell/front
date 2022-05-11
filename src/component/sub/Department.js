@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import Layout from '../common/Layout';
 
 function Department() {
   let [index, setIndex] = useState(0);
-  const frame = useRef(null);
   // 추후 axios로 불러온 데이터 배열을 담을 state 생성
   const [members, setMembers] = useState([]);
   const path = process.env.PUBLIC_URL;
@@ -11,8 +11,6 @@ function Department() {
   
   // 컴포넌트 생성시 처음 한번만 동작
   useEffect(()=> {
-    //console.log('컴포넌트 생성');
-    frame.current.classList.add('on');
     /*
     // clean up 함수 
     return()=> {
@@ -34,14 +32,7 @@ function Department() {
   },[index])
 
   return (
-    <section className='department' ref={frame}>
-      <div className='inner'>
-        <h1>Department</h1>
-
-        {/* <button className='plus' onClick={()=> setIndex(++index)}>더하기</button>
-        <button className='minus' onClick={()=> setIndex(--index)}>빼기</button>
-        <h3>{index}</h3> */}
-
+    <Layout name='Department'>
         <ul>
           {members.map((data, idx) => {
             return (
@@ -65,8 +56,7 @@ function Department() {
         }}>
           변경
         </button>
-      </div>
-    </section>
+    </Layout>
   )
 }
 
