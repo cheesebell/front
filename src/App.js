@@ -8,6 +8,7 @@ import Gallery from './component/sub/Gallery';
 import Department from './component/sub/Department';
 import Location from './component/sub/Location';
 import Join from './component/sub/Join';
+import Community from './component/sub/Community';
 
 import './scss/style.scss';
 
@@ -28,6 +29,7 @@ function App() {
       <Route path='/youtube' component={Youtube}/>
       <Route path='/gallery' component={Gallery}/>
       <Route path='/location' component={Location}/>
+      <Route path='/community' component={Community}/>
       <Route path='/join' component={Join}/>
       <Foot/>
     </>

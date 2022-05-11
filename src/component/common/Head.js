@@ -16,6 +16,7 @@ function Head(props) {
         <li><NavLink to='/youtube' activeStyle={active}>Youtube</NavLink></li>
         <li><NavLink to='/department' activeStyle={active}>Department</NavLink></li>
         <li><NavLink to='/location' activeStyle={active}>Location</NavLink></li>
+        <li><NavLink to='/community' activeStyle={active}>Community</NavLink></li>
         <li><NavLink to='/join' activeStyle={active}>Join</NavLink></li>
       </ul>
       <p className='menu'><FontAwesomeIcon icon={faBars} /></p>
@@ -23,4 +24,4 @@ function Head(props) {
   )
 }
 
-export default Head
+export default Head;
