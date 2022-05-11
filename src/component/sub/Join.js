@@ -2,7 +2,7 @@ import Layout from '../common/Layout';
 import { useEffect, useState } from 'react';
 
 
-function Join(history) {
+function Join({history}) {
 
     const initVal = {
 		userid: '',
@@ -27,11 +27,11 @@ function Join(history) {
 		const spc = /[~!@#$%^&*()_+\]]/;
         
         if(arg.userid.length < 5) {
-            err.userid = '아이디를 5글자 이상 입력하세요.';
+            errs.userid = '아이디를 5글자 이상 입력하세요';
         }
 
-        if(arg.userid.length < 10) {
-            errs.comment = '남기는 말을 10글자 이상 입력하세요';
+        if(arg.comments.length < 10) {
+            errs.comments = '남기는 말을 10글자 이상 입력하세요';
         }
 
         if(arg.email.length < 5 || !/@./.test(arg.email)) {
@@ -52,14 +52,16 @@ function Join(history) {
         }
         
         if(!arg.gender) {
-            errs.gender = '성별을 입력하세요'
+            errs.gender = '성별을 선택하세요'
         }
 
         if(!arg.interests) {
             errs.interests = '관심사를 하나 이상 선택하세요'
         }
 
-        if(!arg.edu)
+        if(!arg.edu) {
+            errs.edu = '최종학력을 선택하세요'
+        }
         // 5글자 이상이면 errs 빈 객체 리턴
         return errs;
     };
@@ -120,7 +122,7 @@ function Join(history) {
             // 전송 성공시 폼 초기화
             // setVal(initVal)
             // 인증완료 메인 컴포넌트로 라우터 이동
-            history.pushState('/');
+            history.push('/');
         } else {
             setSuccess(false)
         }
@@ -154,19 +156,19 @@ function Join(history) {
                         </tr>
                         <tr>
                             <th>
-                                <label htmlFor='comments'>COMMNETS</label>
+                                <label htmlFor='comments'>COMMENTS</label>
                             </th>
                             <td>
                                 <textarea
                                     name='comments'
-                                    id='commnets'
+                                    id='comments'
                                     cols='30'
                                     rows='10'
                                     placeholder='남기는 말을 입력하세요'
-                                    value={val.commnets}
+                                    value={val.comments}
                                     onChange={handleChange}
                                 />
-                                <span className='err'>{err.commnets}</span>
+                                <span className='err'>{err.comments}</span>
                             </td>
                         </tr>
                         <tr>
