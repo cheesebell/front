@@ -6,7 +6,7 @@ function Community() {
     const textarea = useRef(null);
     const editInput = useRef(null); // 수정처리 선언
     const editTextarea = useRef(null);
-    // 4. 메인 컴포넌트에서 로컬저장소에 저장된 데이터를 다시 state에 옮겨담음
+    // 순서04. 메인 컴포넌트에서 로컬저장소에 저장된 데이터를 다시 state에 옮겨담음
     let data = localStorage.getItem('posts');
     data = JSON.parse(data);
 
@@ -91,7 +91,7 @@ function Community() {
         )
     }
 
-    // 5. 해당 컴포넌트에서 CRUD로 데이터 변경이 일어날때마다 로컬저장소에 저장
+    // 순서05. 해당 컴포넌트에서 CRUD로 데이터 변경이 일어날때마다 로컬저장소에 저장
     useEffect(()=> {
         localStorage.setItem('posts', JSON.stringify(posts));
     },[posts])
@@ -116,6 +116,7 @@ function Community() {
             
             <div className='showbox'>
                 {posts.map((post,idx) => {
+                    // 순서06. 변경된 데이터로 다시 리스트 출력
                     return (
                         <article key={idx}>
                             {post.enableUpdate ? (
