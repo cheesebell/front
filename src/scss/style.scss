@@ -4,8 +4,11 @@
 @import 'common/layout';
 
 // main
-@import 'main/content';
 @import 'main/visual';
+@import 'main/news';
+@import 'main/pics';
+@import 'main/vids';
+@import 'main/btns';
 
 // sub
 @import 'sub/gallery';

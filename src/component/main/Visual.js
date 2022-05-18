@@ -2,7 +2,9 @@ import React from 'react'
 
 function Visual() {
   return (
-    <div>Visual</div>
+    <figure className='myScroll'>
+      Visual
+    </figure>
   )
 }
 

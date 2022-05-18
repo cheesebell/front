@@ -2,7 +2,7 @@ import React from 'react'
 
 function Foot() {
   return (
-    <div>Foot</div>
+    <div>2022 Cheesebell &copy; ALL RIGHTS RESERVED.</div>
   )
 }
 

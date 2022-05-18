@@ -8,7 +8,7 @@ function Layout(props) {
     },[]);
 
     return (
-        <section ref={frame} className={props.name}>
+        <section ref={frame} className={`common ${props.name}`}>
             <div className='inner'>
                 <h1>{props.name}</h1>
                 {props.children}

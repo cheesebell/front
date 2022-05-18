@@ -8,19 +8,23 @@ header {
 	flex-wrap: wrap;
 
   &.main {
-    background: #fff;
-    border-bottom: 1px solid #ccc;
-    
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	background: transparent;
+	border-bottom: 1px solid #bbb;
+	z-index: 3;
+
     h1 a {
-			color: #333;
+			color: #fff;
 		}
 		.gnb {
 			li a {
-				color: #555;
+				color: #fff;
 			}
 		}
 		.menu .fa-bars {
-			color: #555;
+			color: #fff;
 		}
   }
 
