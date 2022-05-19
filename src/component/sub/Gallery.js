@@ -1,11 +1,12 @@
 import React , { useEffect, useState } from 'react';
 import axios from 'axios';
 import Layout from '../common/Layout';
+import Popup from '../common/Popup';
 
 function Gallery() {
 
   const [items, setItems] = useState([]);
-  const [isPop, setIspop] = useState(false);
+  const [isPop, setIsPop] = useState(false);
   const [index, setIndex] = useState(0);
   const key = '2ded31f6bd2818a5bdf20954d95106f2';
   const method = 'flickr.interestingness.getList';
@@ -37,7 +38,7 @@ function Gallery() {
               return (
                 <li key={idx} 
                     onClick={()=> {
-                      setIspop(!isPop)
+                      setIsPop(!isPop)
                       setIndex(idx)
                     }
                 }>
@@ -50,29 +51,17 @@ function Gallery() {
           </ul>
       </Layout>
 
-      { isPop ? <Popup/> : null }
+      { isPop ? (
+        <Popup>
+            <div className='pic'>
+              <img src={`https://live.staticflickr.com/${items[index].server}/${items[index].id}_${items[index].secret}_b.jpg`} />
+            </div>
+            <p>{items[index].title}</p>
+            <span onClick={() => setIsPop(!isPop)}>close</span>
+        </Popup> 
+      ) : null }
     </>
   );
-
-  function Popup() {
-    useEffect(()=> {
-      document.body.style.overflow = 'hidden';
-      return () => (document.body.style.overflow = 'auto')
-    })
-
-    return (
-      <aside className='popup'>
-        <span onClick={()=> {
-          setIspop(!isPop)
-        }}>close</span>
-        
-        <div className='pic'>
-          <img src={`https://live.staticflickr.com/${items[index].server}/${items[index].id}_${items[index].secret}_b.jpg`} />
-          <p>{items[index].title}</p>
-        </div>
-      </aside>
-    )
-  }
 }
 
-export default Gallery
+export default Gallery;
