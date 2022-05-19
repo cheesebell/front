@@ -1,6 +1,7 @@
 import React , { useEffect, useState} from 'react';
 import axios from 'axios';
 import Layout from '../common/Layout';
+import Popup from '../common/Popup';
 
 
 function Youtube() {
@@ -54,31 +55,19 @@ function Youtube() {
         })}
     </Layout>
 
-    {isPop ? <Popup/> : null}
-    </>
-  );
-  
-  function Popup() {
-    // 팝업띄워지면 도큐먼트 fix
-    useEffect(()=> {
-      document.body.overflow = 'hidden';
-
-      return () => {
-        document.body.overflow = 'auto';
-      }
-    },[]);
-  
-    return (
-      <aside className='popup'>
-        <span onClick={()=> setIsPop(!isPop)}>close</span>
+    {isPop ? ( 
+      <Popup> 
         <iframe src={
           'https://www.youtube.com/embed/' +
           items[index].snippet.resourceId.videoId
-        }
-        frameBorder='0'></iframe>
-      </aside>
+        } frameBorder='0'
+        />
+        <span onClick={()=> setIsPop(!isPop)}>close</span>
+      </Popup>
     )
-  }
+    : null}
+    </>
+  );
 }
 
 export default Youtube;
