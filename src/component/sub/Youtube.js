@@ -1,35 +1,20 @@
-import React , { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
+ import React , { useState, useRef } from 'react';
+import { useSelector} from 'react-redux';
 import Layout from '../common/Layout';
 import Popup from '../common/Popup';
 
 
 function Youtube() {
+  // store에 youtubeReducer데이터를 가져옴 (반배열)
+  const vidData = useSelector((store) => store.youtubeReducer.youtube);
   const pop = useRef(null);
-  const [items, setItems] = useState([]);
   const [index, setIndex] = useState(0);
-  const [loading, setLoading] = useState(false);
-
-  const api = 'AIzaSyA4JSBOYOot3CbalOVi-yn74v4FMmNPmsc';
-  const list = 'PLC9z-XDyK2RgktTbTXl8MjyTEdzTAFIT4';
-  const url = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api}&playlistId=${list}&maxResult=3&part=snippet`;
-
-
-  useEffect(()=> {
-    axios
-    .get(url)
-    .then((json) => {
-      setItems(json.data.items);
-      // 빈 스테이트에 데이터가 담기면 loading 스테이트를 true로 변경
-      setLoading(true);
-    })
-  },[]);
 
   return (
     // 두개 이상일때 프래그먼트
     <>
     <Layout name='Youtube'>
-        {items.map((item, idx) => {
+        {vidData.map((item, idx) => {
           let desc = item.snippet.description;
           let desc_len = desc.length;
           let date = item.snippet.publishedAt;
@@ -58,12 +43,11 @@ function Youtube() {
     </Layout>
       {/* useRef로 컴포넌트를 참조 가능 (자식컴포넌트로 forwardRef로 전달할 경우) */}
       <Popup ref={pop}> 
-        { loading && (
+        { vidData.length !== 0 && (
           <iframe src={
             'https://www.youtube.com/embed/' +
-            items[index].snippet.resourceId.videoId
-          } frameBorder='0'
-          />
+            vidData[index].snippet.resourceId.videoId
+          } frameBorder='0'></iframe>
         )}
         <span onClick={() => pop.current.close()}>close</span>
       </Popup>

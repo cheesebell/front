@@ -21,6 +21,7 @@ function Head(props) {
         <li><NavLink to='/location' activeStyle={active}>Location</NavLink></li>
         <li><NavLink to='/community' activeStyle={active}>Community</NavLink></li>
         <li><NavLink to='/join' activeStyle={active}>Join</NavLink></li>
+        <li><NavLink to='/flickr' activeStyle={active}>Flickr</NavLink></li>
       </ul>
       <p className='menu'><FontAwesomeIcon icon={faBars} /></p>
     </header>

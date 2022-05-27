@@ -1,36 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 import Layout from '../common/Layout';
+import { setMembers } from '../../redux/actions';
 
 function Department() {
-  let [index, setIndex] = useState(0);
-  // 추후 axios로 불러온 데이터 배열을 담을 state 생성
-  const [members, setMembers] = useState([]);
+
   const path = process.env.PUBLIC_URL;
-  const url = `${path}/DB/Department.json`;
+  const members = useSelector((store) => store.memberReducer.members);
   
-  // 컴포넌트 생성시 처음 한번만 동작
-  useEffect(()=> {
-    /*
-    // clean up 함수 
-    return()=> {
-      console.log('소멸')
-    }
-    */
-
-    axios.get(url)
-    .then((json) => {
-      setMembers(json.data.data);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  },[]);
-
-  useEffect(()=> {
-   // console.log('index값 변경')
-  },[index])
-
   return (
     <Layout name='Department'>
         <ul>
@@ -44,18 +20,6 @@ function Department() {
             )
           })}
         </ul>
-        
-        <button
-          onClick={()=> {
-            // member 복사? ... 가져오기? 그런듯
-            let newMembers = [...members];
-            // member에서 0번째 name을 겹벚꽃으로 바꿔라
-            newMembers[0].name = '겹벚꽃';
-            // 짜잔
-            setMembers(newMembers);
-        }}>
-          변경
-        </button>
     </Layout>
   )
 }

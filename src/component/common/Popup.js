@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 */
 
 const Popup = forwardRef((props, ref) => {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     useImperativeHandle(ref, () => {
         return {
