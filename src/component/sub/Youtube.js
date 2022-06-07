@@ -13,7 +13,7 @@ function Youtube() {
   return (
     // 두개 이상일때 프래그먼트
     <>
-    <Layout name='Youtube'>
+    <Layout name='Youtube' pic={'/img/pic6.jpg'}>
         {vidData.map((item, idx) => {
           let desc = item.snippet.description;
           let desc_len = desc.length;
@@ -43,12 +43,7 @@ function Youtube() {
     </Layout>
       {/* useRef로 컴포넌트를 참조 가능 (자식컴포넌트로 forwardRef로 전달할 경우) */}
       <Popup ref={pop}> 
-        { vidData.length !== 0 && (
-          <iframe src={
-            'https://www.youtube.com/embed/' +
-            vidData[index].snippet.resourceId.videoId
-          } frameBorder='0'></iframe>
-        )}
+        { vidData.length !== 0 && <iframe src={ 'https://www.youtube.com/embed/' + vidData[index].snippet.resourceId.videoId } frameBorder='0'></iframe> }
         <span onClick={() => pop.current.close()}>close</span>
       </Popup>
     </>

@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import Popup from '../common/Popup';
-import { useRef, useState } from 'react';
+import { useRef, useState } from 'react'
 
 function Vids() {
-  const vidData = useSelector((store) => store.youtubeReducer.youtube);
+  const { youtube } = useSelector((store) => store.youtubeReducer);
   const pop = useRef(null);
   const [index, setIndex] = useState(0);
 
@@ -13,7 +13,7 @@ function Vids() {
 			<h1>Recent Youtube</h1>
 
       <ul className='vidList'>
-        {vidData.map((vid, idx) => {
+        {youtube.map((vid, idx) => {
           if( idx < 3) {
             return (
               <li
@@ -32,6 +32,11 @@ function Vids() {
 		</section>
 
     <Popup ref={pop}>
+      {youtube.length !== 0 && (
+        <iframe src={
+          'https://www.youtube.com/embed/' + youtube[index].snippet.resourceId.videoId
+        } frameBorder='0'></iframe>
+      )}
       <span onClick={() => pop.current.close()}>close</span>
     </Popup>
     </>

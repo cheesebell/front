@@ -97,7 +97,7 @@ function Community() {
     },[posts])
 
     return (
-        <Layout name={'Community'}>
+        <Layout name={'Community'} pic={'/img/pic1.jpg'}>
             <div className='inputBox'>
                 <input 
                     type='text' 
