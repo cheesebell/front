@@ -24,9 +24,8 @@ function App() {
   useEffect(()=> {
     dispatch({ 
       type:  types.FLICKR.start, 
-      opt: {type: 'interest',
-      count: 100 
-    }});
+      opt: {type: 'interest', count: 100 }
+    });
     dispatch({ type: types.YOUTUBE.start });
     dispatch({ type: types.MEMBERS.start});
   },[]);
