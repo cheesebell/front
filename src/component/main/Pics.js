@@ -24,17 +24,17 @@ function Pics(props) {
         position >= 0 ? {transform: `translateX(${position * 1}px)`}
         : null
       }>Gallery</h2>
+
       {flickr.map((pic, idx) => {
         if (idx < 5) {
-          <li
-            key={idx}
-            onClick={() => {
+          return(
+            <li key={idx} onClick={() => {
               setIndex(idx);
               pop.current.open();
-            }}
-          >
-            <img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_s.jpg`}/>
-          </li>
+            }}>
+              <img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_s.jpg`}/>
+            </li>
+          )
         }
       })}
 		</section>

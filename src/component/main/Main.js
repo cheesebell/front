@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Head from '../common/Head';
-import Visual from '../main/Visual';
+import Visual from './Visual';
 import News from './News';
 import Pics from './Pics';
 import Vids from './Vids';
@@ -8,7 +8,7 @@ import Btns from './Btns';
 import Anime from '../../class/anim';
 
 function Main() {
-    const [index, setIndex] = useState(0);
+    const [idx, setIdx] = useState(0);
     // 현재 스크롤되는 값을 관리할 state추가
     const [scrolled, setScrolled] = useState(0);
     const main = useRef(null);
@@ -61,13 +61,13 @@ function Main() {
     },[]);
 
     // 순서값에 따라 스크롤 모션
-useEffect(()=> {
+    useEffect(()=> {
         new Anime(window, {
             prop: 'scroll',
-            value: pos.current[index],
+            value: pos.current[idx],
             duration: 500,
         })
-    },[index])
+    },[idx])
 
     return (
         <>
@@ -77,7 +77,7 @@ useEffect(()=> {
             <News />
             <Pics scrolled={scrolled} start={pos.current[2]} />
             <Vids />
-            <Btns setIndex={setIndex} />
+            <Btns setIdx={setIdx} />
         </main>
         </>
     )

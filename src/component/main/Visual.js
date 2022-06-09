@@ -1,13 +1,13 @@
-import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css';
 
 function Visual() {
   const path = process.env.PUBLIC_URL;
+  const cursor = useRef(null);
   const [num, setNum] = useState(3);
 
   const handleResize = () => {
@@ -15,9 +15,16 @@ function Visual() {
     wid < 1180 ? setNum(1) : setNum(3);
   };
 
+  const mouseMove = (e) => {
+		cursor.current.style.left = e.clientX + 'px';
+		cursor.current.style.top = e.clientY + 'px';
+	};
+
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', mouseMove);
+
     return()=> window.removeEventListener('resie', handleResize);
   },[])
 
@@ -33,24 +40,21 @@ function Visual() {
         navigation={true}
         modules={[Pagination, Navigation]}
         className='swiper'>
-          <SwiperSlide>
-            <video src={`${path}/img/vid1.mp4`} loop autoPlay muted />
-          </SwiperSlide>
-          <SwiperSlide>
-            <video src={`${path}/img/vid2.mp4`} loop autoPlay muted />
-          </SwiperSlide>
-          <SwiperSlide>
-            <video src={`${path}/img/vid3.mp4`} loop autoPlay muted />
-          </SwiperSlide>
-          <SwiperSlide>
-            <video src={`${path}/img/vid4.mp4`} loop autoPlay muted />
-          </SwiperSlide>
-          <SwiperSlide>
-            <video src={`${path}/img/vid5.mp4`} loop autoPlay muted />
-          </SwiperSlide>
+          {[1,2,3,4,5].map((num) => {
+            return (
+              <SwiperSlide
+                key={num}
+                onMouseEnter={() => (cursor.current.style = 'transform: scale(8)')}
+                onMouseLeave={() => (cursor.current.style = 'transform: scale(1)')}
+              >
+                <video src={`${path}/img/vid${num}.mp4`} loop autoPlay muted></video>
+              </SwiperSlide>
+            )
+          })}
       </Swiper>
+      <div className='cursor' ref={cursor}></div>
     </figure>
   )
 }
 
-export default Visual
+export default Visual;
